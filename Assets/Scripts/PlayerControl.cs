@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class PlayerControl : MonoBehaviour
 {
+
     public Animator animator;
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
@@ -21,10 +22,12 @@ public class PlayerControl : MonoBehaviour
     }
     void Update()
     {
+        positionC = backGround.position.x;
         PlayerMove();
         PlayerJump();
         Attack();
     }
+    float positionC;
     void PlayerMove()
     {
         float xAxis = Input.GetAxis("Vertical");
@@ -34,6 +37,7 @@ public class PlayerControl : MonoBehaviour
             transform.position+=(new Vector3(yAxis,0)*moveSpeed*Time.deltaTime);
             transform.rotation = yAxis < 0 ? Quaternion.Euler(0, 180, 0) : Quaternion.identity;
             animator.SetBool("RunB", true);
+
         }
         else
         {
@@ -75,11 +79,10 @@ public class PlayerControl : MonoBehaviour
     public void TakeDamage(float value)
     {
         animator.SetTrigger("TakeDamageT");
-        health-=value;
-        if(health<=0)
-        {
-            PlayerDeath();
-        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        SceneManager.LoadScene("Game");
     }
     void OnDrawGizmosSelected()
     {

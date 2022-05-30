@@ -20,6 +20,7 @@ public class EnemyController : MonoBehaviour
     {
         playerLayer = LayerMask.GetMask("Player");
         rigidbody2d=GetComponent<Rigidbody2D>();
+        playerLocation = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     // Update is called once per frame
